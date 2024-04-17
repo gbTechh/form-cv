@@ -1,12 +1,17 @@
 <?php 
 session_start();
 if (isset($_SESSION["errores"])) {
-    echo "<h2 class='title-alert'>Se encontraron errores en el formulario:</h2>";
-    foreach ($_SESSION["errores"] as $campo => $error) {
-        echo "<p class='p-alert'>Error en el campo $campo: $error</p>";
-    }
-    // Limpiar los mensajes de error de la sesión
+  $errores = $_SESSION["errores"];
+
+ 
+  unset($_SESSION["errores"]);
 }
+
+if (isset($_SESSION["data"])) {
+  $data = $_SESSION["data"];
+  unset($_SESSION["data"]);
+}
+
 
 ?>
 
@@ -21,32 +26,49 @@ if (isset($_SESSION["errores"])) {
         <form class="form mt-4" action="./cv.php" method="POST">
           <div class="group-form">
             <label for="name">Nombre</label>
-            <input id="name" name="name" type="text" placeholder="John"/>
-               
+            <input id="name" name="name" type="text" placeholder="John" value="<?php echo $data['name'];?>"/>
+            <?php if (!empty($errores['name'])): ?>
+              <span class="text-error"><?php echo $errores['name']; ?></span>
+            <?php endif; ?>  
           </div>
           <div class="group-form">
             <label for="lastname">Apellidos</label>
-            <input id="lastname" name="lastname" type="text" placeholder="Dev"/>
+            <input id="lastname" name="lastname" type="text" placeholder="Dev" value="<?php echo $data['lastname'];?>"/>
+            <?php if (!empty($errores['lastname'])): ?>
+              <span class="text-error"><?php echo $errores['lastname']; ?></span>
+            <?php endif; ?>  
           </div>
           <div class="group-form">
             <label for="date">Fecha de nacimiento</label>
-            <input id="date" name="date" type="date" />
+            <input id="date" name="date" type="date" value="<?php echo $data['date'];?>"/>
+            <?php if (!empty($errores['date'])): ?>
+              <span class="text-error"><?php echo $errores['date']; ?></span>
+            <?php endif; ?>  
           </div>
           <div class="group-form">
             <label for="ocupacion">Ocupación</label>
-            <input id="ocupacion" name="ocupacion" type="text" placeholder="Estudiante"/>
+            <input id="ocupacion" name="ocupacion" type="text" placeholder="Estudiante" value="<?php echo $data['ocupacion'];?>"/>
+            <?php if (!empty($errores['ocupacion'])): ?>
+              <span class="text-error"><?php echo $errores['ocupacion']; ?></span>
+            <?php endif; ?>  
           </div>
           <div class="group-form">
             <label for="phone">Teléfono</label>
-            <input id="phone" name="phone" type="text" placeholder="999999999"/>
+            <input id="phone" name="phone" type="text" placeholder="999999999" value="<?php echo $data['phone'];?>"/>
+            <?php if (!empty($errores['phone'])): ?>
+              <span class="text-error"><?php echo $errores['phone']; ?></span>
+            <?php endif; ?>  
           </div>
           <div class="group-form">
             <label for="email">Email</label>
-            <input id="email" name="email" type="text" placeholder="email@email.com"/>
+            <input id="email" name="email" type="text" placeholder="email@email.com" value="<?php echo $data['email'];?>"/>
+            <?php if (!empty($errores['email'])): ?>
+              <span class="text-error"><?php echo $errores['email']; ?></span>
+            <?php endif; ?>  
           </div>
           <div class="group-form">
             <label for="nacionalidad">Nacionalidad</label>
-            <select id="nacionalidad" name="nacionalidad" type="text">
+            <select id="nacionalidad" name="nacionalidad" type="text" >
               <option value="Perú" selected>Perú</option>
               <option value="Argentina">Argentina</option>
               <option value="Venezuela">Venezuela</option>
@@ -56,7 +78,7 @@ if (isset($_SESSION["errores"])) {
           </div>
           <div class="group-form">            
             <label for="aptitud">Escoge una aptitud de la lista</label>
-            <input list="aptitudes" name="aptitud" id="aptitud"/>          
+            <input list="aptitudes" name="aptitud" id="aptitud" />          
             <datalist id="aptitudes">
               <option value="Comunicación efectiva">
               <option value="Trabajo en equipo">
@@ -142,7 +164,14 @@ if (isset($_SESSION["errores"])) {
           </div>
           <div class="group-form">
             <label for="perfil">Descripción de mi perfil</label>
-            <textarea placeholder="Escribe lo mejor de ti... (:" rows="5" name="perfil" id="perfil"></textarea>
+            <textarea placeholder="Escribe lo mejor de ti... (:" rows="5" name="perfil" id="perfil">
+              <?php if (!empty($data['perfil'])) { 
+                echo trim($data['perfil']);
+              } ?>  
+            </textarea>
+            <?php if (!empty($errores['perfil'])): ?>
+              <span class="text-error"><?php echo $errores['perfil']; ?></span>
+            <?php endif; ?>  
           </div>
           <button class="btn" type="submit" >Enviar</button>
          

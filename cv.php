@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errores['ocupacion'] = "El campo ocupacion es obligatorio.";
     }
     if (empty($phone)) {
-      $errores['phone'] = "El campo ocupacion es obligatorio.";
+      $errores['phone'] = "El campo telefono es obligatorio.";
     }else{
       if(!ctype_digit($phone)){
         $errores['phone'] = "El teléfono debe ser un numero válido.";
@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($email)) {
         $errores['email'] = "El campo email es obligatorio.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errores[] = "El email ingresado no es válido.";
+        $errores['email'] = "El email ingresado no es válido.";
     }
     if (empty($perfil)) {
         $errores['perfil'] = "El campo mensaje es obligatorio.";
@@ -48,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if(!empty($errores)){
       $_SESSION["errores"] = $errores;
+      $_SESSION["data"] = $_POST;
       header("Location: index.php");
       exit;
     }
