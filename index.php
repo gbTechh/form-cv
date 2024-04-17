@@ -1,5 +1,12 @@
 <?php 
-
+session_start();
+if (isset($_SESSION["errores"])) {
+    echo "<h2 class='title-alert'>Se encontraron errores en el formulario:</h2>";
+    foreach ($_SESSION["errores"] as $campo => $error) {
+        echo "<p class='p-alert'>Error en el campo $campo: $error</p>";
+    }
+    // Limpiar los mensajes de error de la sesión
+}
 
 ?>
 
@@ -15,6 +22,7 @@
           <div class="group-form">
             <label for="name">Nombre</label>
             <input id="name" name="name" type="text" placeholder="John"/>
+               
           </div>
           <div class="group-form">
             <label for="lastname">Apellidos</label>

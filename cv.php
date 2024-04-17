@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errores[] = "El email ingresado no es válido.";
     }
     if (empty($perfil)) {
-        $errores[] = "El campo mensaje es obligatorio.";
+        $errores['perfil'] = "El campo mensaje es obligatorio.";
     }
 
     if(!empty($errores)){
